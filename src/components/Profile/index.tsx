@@ -3,29 +3,33 @@ import { ProfileContainer, ProfileBioHeader, ProfileBio, ProfileInfo, ProfileInf
 import { faGithub } from "@fortawesome/free-brands-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBuilding, faUserGroup } from "@fortawesome/free-solid-svg-icons";
+import { useContext } from "react";
+import { UserContext } from "../../contexts/UserContext";
 
 export function Profile() {
-    return (
+    const { user } = useContext(UserContext);
+
+    return user && (
         <ProfileContainer>
-            <img src="https://github.com/felipeevalerio.png" alt="Foto de perfil" />
+            <img src={user.avatar_url} alt="Foto de perfil" />
             <ProfileBio>
                 <ProfileBioHeader>
-                    <h1>Felipe Valério</h1>
-                    <Link title="GITHUB" url="https://github.com/felipeevalerio"/>
+                    <h1>{user.name}</h1>
+                    <Link title="GITHUB" url={user.html_url}/>
                 </ProfileBioHeader>
-                <p>Tristique volutpat pulvinar vel massa, pellentesque egestas. Eu viverra massa quam dignissim aenean malesuada suscipit. Nunc, volutpat pulvinar vel mass.</p>
+                <p>{user.bio}</p>
                 <ProfileInfo>
                     <ProfileInfoWithIcon>
                         <FontAwesomeIcon icon={faGithub} />
-                        <span>felipeevalerio</span>
+                        <span>{user.login}</span>
                     </ProfileInfoWithIcon>
                     <ProfileInfoWithIcon>
                         <FontAwesomeIcon icon={faBuilding} />
-                        <span>Rocketseat</span>
+                        <span>{user.company}</span>
                     </ProfileInfoWithIcon>
                     <ProfileInfoWithIcon>
                         <FontAwesomeIcon icon={faUserGroup} />
-                        <span>32 seguidores</span>
+                        <span>{user.followers} seguidores</span>
                     </ProfileInfoWithIcon>
                 </ProfileInfo>
             </ProfileBio>

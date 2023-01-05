@@ -18,6 +18,7 @@ export const ProfileContainer = styled.section`
 export const ProfileBio = styled.div`
     display:flex;
     flex-direction: column;
+    flex: 1;
 
     p {
         color: ${props => props.theme["base-text"]};
