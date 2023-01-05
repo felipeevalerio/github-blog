@@ -16,6 +16,8 @@ interface UserContextType {
     user: User | null;
     fetchIssuesFromRepository: (query?: string) => void;
     issues: Issue[];
+    issueDetails: IssueDetails | null;
+    fetchDetailsFromIssue: (issueNumber: string) => void;
 }
 
 interface Issue {
@@ -23,6 +25,11 @@ interface Issue {
     body: string;
     created_at: string;
     number: number;
+}
+
+interface IssueDetails extends Issue {
+    comments: number;
+    username: string;
 }
 
 export const UserContext = createContext({} as UserContextType);
@@ -34,6 +41,7 @@ interface UserProviderProps {
 export function UserProvider({ children }: UserProviderProps){ 
     const [user, setUser] = useState<User | null>(null);
     const [issues, setIssues] = useState<Issue[]>([]);
+    const [issueDetails, setIssueDetails] = useState<IssueDetails | null>(null)
 
     const fetchUserData = useCallback(async () => {
         const response = await axios.get('https://api.github.com/users/felipeevalerio');
@@ -54,13 +62,25 @@ export function UserProvider({ children }: UserProviderProps){
         setIssues(response.data.items);
     }, []);
 
+    const fetchDetailsFromIssue = useCallback(async (issueNumber: string) => {
+        const response = await axios.get(`https://api.github.com/repos/felipeevalerio/github-blog/issues/${issueNumber}`)
+        setIssueDetails({
+            comments: response.data.comments,
+            username: response.data.user.login,
+            body: response.data.body,
+            created_at: response.data.created_at,
+            number: response.data.number,
+            title: response.data.title
+        })
+    }, []); 
+
     useEffect(() => {
         fetchUserData();    
         fetchIssuesFromRepository();
     }, [fetchUserData]);
 
     return (
-        <UserContext.Provider value={{user, fetchIssuesFromRepository, issues}}>
+        <UserContext.Provider value={{user, fetchIssuesFromRepository, issues, fetchDetailsFromIssue, issueDetails}}>
             {children}
         </UserContext.Provider>
     )

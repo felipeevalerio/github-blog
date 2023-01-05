@@ -1,10 +1,11 @@
-import { Link } from "../Link";
-import { ProfileContainer, ProfileBioHeader, ProfileBio, ProfileInfo, ProfileInfoWithIcon } from "./styles";
+import { LinkRedirection } from "../LinkRedirection";
+import { ProfileContainer, ProfileBioHeader, ProfileBio, ProfileInfo } from "./styles";
 import { faGithub } from "@fortawesome/free-brands-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faBuilding, faUserGroup } from "@fortawesome/free-solid-svg-icons";
+import { faBuilding, faUserGroup, faArrowUpRightFromSquare } from "@fortawesome/free-solid-svg-icons";
 import { useContext } from "react";
 import { UserContext } from "../../contexts/UserContext";
+import { InfoWithIcon } from "../InfoWithIcon";
 
 export function Profile() {
     const { user } = useContext(UserContext);
@@ -15,22 +16,16 @@ export function Profile() {
             <ProfileBio>
                 <ProfileBioHeader>
                     <h1>{user.name}</h1>
-                    <Link title="GITHUB" url={user.html_url}/>
+                    <LinkRedirection url={user.html_url} target="_blank" rel="noopener noreferrer">
+                        GITHUB
+                        <FontAwesomeIcon icon={faArrowUpRightFromSquare}/>
+                    </LinkRedirection>
                 </ProfileBioHeader>
                 <p>{user.bio}</p>
                 <ProfileInfo>
-                    <ProfileInfoWithIcon>
-                        <FontAwesomeIcon icon={faGithub} />
-                        <span>{user.login}</span>
-                    </ProfileInfoWithIcon>
-                    <ProfileInfoWithIcon>
-                        <FontAwesomeIcon icon={faBuilding} />
-                        <span>{user.company}</span>
-                    </ProfileInfoWithIcon>
-                    <ProfileInfoWithIcon>
-                        <FontAwesomeIcon icon={faUserGroup} />
-                        <span>{user.followers} seguidores</span>
-                    </ProfileInfoWithIcon>
+                    <InfoWithIcon icon={faGithub} info={user.login}/>
+                    <InfoWithIcon icon={faBuilding} info={user.company}/>
+                    <InfoWithIcon icon={faUserGroup} info={user.followers + ' seguidores'}/>
                 </ProfileInfo>
             </ProfileBio>
         </ProfileContainer>
