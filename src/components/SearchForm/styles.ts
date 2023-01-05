@@ -4,7 +4,8 @@ export const SearchFormContainer = styled.form`
     display: flex;
     flex-direction: column;
     gap: 1.5rem;
-
+    margin: 4.5rem 0 3rem;
+    
     input {
         background: ${props => props.theme["base-input"]};
         border-radius: 6px;
@@ -29,7 +30,6 @@ export const SearchFormHeader = styled.header`
     display: flex;
     align-items: center;
     justify-content: space-between;
-    margin-top: 4.5rem;
 
     h3 {
         color: ${props => props.theme["base-subtitle"]};
