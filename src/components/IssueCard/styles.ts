@@ -35,5 +35,7 @@ export const IssueCardContainer = styled.article`
 
     p {
         color: ${props => props.theme["base-text"]};
+        overflow: hidden;
+        text-overflow: ellipsis;
     }
 `

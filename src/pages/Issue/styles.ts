@@ -1,13 +1,15 @@
 import styled from "styled-components";
 
 export const IssueContainer = styled.div`
-
+    color: ${props =>props.theme['base-text']};
 `
 
 export const IssueHeader = styled.header`
+    margin-bottom: 2.5rem;
     background: ${props => props.theme["base-profile"]};
     padding: 2rem;
     display: flex;
+    border-radius: 10px;
     flex-direction: column;
 
     nav {

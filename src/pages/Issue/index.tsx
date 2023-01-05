@@ -1,4 +1,4 @@
-import { Link, useNavigate, useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { IssueContainer, IssueHeader, IssueInfo } from "./styles";
 import { faArrowUpRightFromSquare, faCalendarDay, faChevronLeft, faComment } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -9,6 +9,7 @@ import { UserContext } from "../../contexts/UserContext";
 import { faGithub } from "@fortawesome/free-brands-svg-icons";
 import { formatDistanceToNow } from "date-fns";
 import { ptBR } from "date-fns/locale";
+import ReactMarkdown from 'react-markdown';
 
 export function Issue() {
     const { fetchDetailsFromIssue, issueDetails } = useContext(UserContext);
@@ -43,6 +44,9 @@ export function Issue() {
                     <InfoWithIcon icon={faComment} info={issueDetails.comments + ' comentários'}/>
                 </IssueInfo>
             </IssueHeader>
+            <ReactMarkdown>
+                {issueDetails.body}
+            </ReactMarkdown>
         </IssueContainer>
     )
 }
